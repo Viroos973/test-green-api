@@ -3,13 +3,17 @@ import { Plus } from 'lucide-react';
 import {useChatList} from "./hooks/useChatList.ts";
 import {CreateChatModal} from "./components";
 
-export const ChatList = () => {
-    const {states, functions} = useChatList()
+interface ChatListProps {
+    setInterlocutor: (interlocutor: string|null) => void
+}
+
+export const ChatList = ({ setInterlocutor }: ChatListProps) => {
+    const {states, functions} = useChatList(setInterlocutor)
 
     return (
         <>
             <Flex direction="column" className="h-full">
-                <CellList filled mode="full-width" className="shrink-0">
+                <CellList filled mode="full-width">
                     <CellSimple
                         title={
                             <Typography.Headline variant="small">
@@ -37,6 +41,7 @@ export const ChatList = () => {
                                         {chat.name}
                                     </Typography.Body>
                                 }
+                                className={states.selectedChatId === chat.chatId ? "!bg-blue-100" : ""}
                             />
                         ))}
                     </CellList>
