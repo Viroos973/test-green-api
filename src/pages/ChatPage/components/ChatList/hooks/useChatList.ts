@@ -1,6 +1,8 @@
 import {useNavigate} from "react-router-dom";
+import {useState} from "react";
 
 export const useChatList = () => {
+    const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
 
     const chats = [
@@ -31,12 +33,15 @@ export const useChatList = () => {
         }
     ]
 
+    const handleOpen = () => setIsOpen(true);
+    const handleClose = () => setIsOpen(false);
+
     const handleChatClick = (chatId: string) => {
         navigate(`?chatId=${chatId}`);
     }
 
     return {
-        states: { chats },
-        functions: { handleChatClick }
+        states: { chats, isOpen },
+        functions: { handleOpen, handleClose, handleChatClick }
     }
 }
