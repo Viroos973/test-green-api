@@ -1,15 +1,17 @@
 import {Button, Flex, Input, Panel, Typography} from "@maxhub/max-ui";
-import "./Login.css"
 import {useLogin} from "./hooks/useLogin.ts";
 import {Controller} from "react-hook-form";
 
-const Login = () => {
-    const { form, functions } = useLogin()
+export const Login = () => {
+    const { states, form, functions } = useLogin()
 
     return (
         <Panel mode="secondary" centeredX centeredY>
             <form onSubmit={functions.onSubmit}>
-                <Flex direction="column" gap={16} className="login-card">
+                <Flex direction="column"
+                      gap={16}
+                      className="w-[calc(100vw-32px)] max-w-[400px] rounded-2xl bg-[var(--background-primary)] p-6"
+                >
                     <Typography.Headline className="w-full text-center">Вход</Typography.Headline>
                     <Controller
                         name="idInstance"
@@ -36,6 +38,11 @@ const Login = () => {
                                         {fieldState.error.message}
                                     </Typography.Body>
                                 )}
+                                {states.instanceError && (
+                                    <Typography.Body variant="small" className="text-red-500">
+                                        {states.instanceError}
+                                    </Typography.Body>
+                                )}
                             </div>
                         )}
                     />
@@ -43,7 +50,5 @@ const Login = () => {
                 </Flex>
             </form>
         </Panel>
-)
+    )
 }
-
-export default Login

@@ -1,13 +1,14 @@
 import {IconButton, Input} from "@maxhub/max-ui";
 import {Send} from "lucide-react";
-import {useMessageInput} from "./hooks/MessageInput.ts";
+import {useMessageInput} from "./hooks/useMessageInput.ts";
 
 interface MessageInputProps {
-    onSend: (type: string, idMessage: string, textMessage: string) => void
+    onSend: (type: string, idMessage: string, textMessage: string) => void,
+    chatId: string|null
 }
 
-export const MessageInput = ({ onSend }: MessageInputProps) => {
-    const { states, functions } = useMessageInput(onSend)
+export const MessageInput = ({ onSend, chatId }: MessageInputProps) => {
+    const { states, functions } = useMessageInput(onSend, chatId)
 
     return (
         <div className="absolute bottom-0 w-full py-3 px-8 flex items-center gap-2">

@@ -5,11 +5,12 @@ import {Controller} from "react-hook-form";
 
 interface CreateChatModalProps {
     isOpen: boolean,
-    closeModal: () => void
+    closeModal: () => void,
+    setInterlocutor: (interlocutor: string|null) => void
 }
 
-export const CreateChatModal = ({ isOpen, closeModal }: CreateChatModalProps) => {
-    const { form, functions } = useCreateChatModal(closeModal)
+export const CreateChatModal = ({ isOpen, closeModal, setInterlocutor }: CreateChatModalProps) => {
+    const { states, form, functions } = useCreateChatModal(closeModal, setInterlocutor)
 
     return (
         <CustomModal isOpen={isOpen} title="Новый чат" closeModal={functions.handleCloseModal}>
@@ -23,6 +24,11 @@ export const CreateChatModal = ({ isOpen, closeModal }: CreateChatModalProps) =>
                             {fieldState.error && (
                                 <Typography.Body variant="small" className="text-red-500">
                                     {fieldState.error.message}
+                                </Typography.Body>
+                            )}
+                            {states.error && (
+                                <Typography.Body variant="small" className="text-red-500">
+                                    {states.error}
                                 </Typography.Body>
                             )}
                         </div>

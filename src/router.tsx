@@ -1,8 +1,8 @@
 import {createBrowserRouter} from "react-router-dom";
-import {ROUTES} from "./utils/constants/routes.ts";
-import Login from "./pages/Login/Login.tsx";
-import Root from "./pages/Root/Root.tsx";
-import ChatPage from "./pages/ChatPage/ChatPage.tsx";
+import {ROUTES} from "./utils/constants";
+import {Login} from "./pages/Login";
+import {Root} from "./pages/Root";
+import {ChatPage} from "./pages/ChatPage";
 
 export const router = createBrowserRouter([
     {

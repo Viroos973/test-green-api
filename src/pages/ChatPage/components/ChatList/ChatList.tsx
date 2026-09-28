@@ -1,7 +1,7 @@
 import {CellList, CellSimple, Flex, IconButton, Typography} from "@maxhub/max-ui";
 import { Plus } from 'lucide-react';
 import {useChatList} from "./hooks/useChatList.ts";
-import {CreateChatModal} from "./components";
+import {CreateChatModal} from "./components/CreateChatModal";
 
 interface ChatListProps {
     setInterlocutor: (interlocutor: string|null) => void
@@ -29,7 +29,7 @@ export const ChatList = ({ setInterlocutor }: ChatListProps) => {
                 </CellList>
                 <div className="w-full flex-1 overflow-y-auto">
                     <CellList filled mode="full-width">
-                        {states.chats.map((chat) => (
+                        {states.chats?.map((chat) => (
                             <CellSimple
                                 key={chat.chatId}
                                 showChevron
@@ -47,7 +47,7 @@ export const ChatList = ({ setInterlocutor }: ChatListProps) => {
                     </CellList>
                 </div>
             </Flex>
-            <CreateChatModal isOpen={states.isOpen} closeModal={functions.handleClose} />
+            <CreateChatModal isOpen={states.isOpen} closeModal={functions.handleClose} setInterlocutor={setInterlocutor} />
         </>
     )
 }

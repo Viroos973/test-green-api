@@ -1,16 +1,19 @@
 import {Button, CellSimple, Flex, IconButton, Typography} from "@maxhub/max-ui";
 import {useChatArea} from "./hooks/useChatArea.ts";
-import {MessageBubble} from "./components";
-import {MessageInput} from "./components/MessageInput/MessageInput.tsx";
+import {MessageBubble} from "./components/MessageBubble";
+import {MessageInput} from "./components/MessageInput";
 import {ChevronLeft} from "lucide-react";
+import type {ChatHistory} from "../../../../shared/api/types";
 
 interface ChatAreaProps {
     title: string,
-    isChat: boolean
+    isChat: boolean,
+    displayMessages: ChatHistory[];
+    setDisplayMessages: React.Dispatch<React.SetStateAction<ChatHistory[]>>;
 }
 
-export const ChatArea = ({ title, isChat }: ChatAreaProps) => {
-    const { states, functions } = useChatArea()
+export const ChatArea = ({ title, isChat, displayMessages, setDisplayMessages }: ChatAreaProps) => {
+    const { states, functions } = useChatArea(displayMessages, setDisplayMessages)
 
     return (
         <Flex direction="column" className="relative h-full min-h-0">
@@ -18,7 +21,7 @@ export const ChatArea = ({ title, isChat }: ChatAreaProps) => {
                         title={title}
                         after={
                             <Button size="small" variant="ghost">
-                                <Typography.Headline variant="small" className="text-red-500">
+                                <Typography.Headline variant="small" className="text-red-500" onClick={functions.logout}>
                                     Выйти
                                 </Typography.Headline>
                             </Button>
@@ -38,7 +41,7 @@ export const ChatArea = ({ title, isChat }: ChatAreaProps) => {
                 </div>
             </div>
             {isChat && (
-                <MessageInput onSend={functions.handleAddMessage} />
+                <MessageInput onSend={functions.handleAddMessage} chatId={states.chatId} />
             )}
         </Flex>
 )
