@@ -1,75 +1,87 @@
-# React + TypeScript + Vite
+# Telegram Web Client
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Веб-приложение для работы с Telegram через Green-API.
 
-Currently, two official plugins are available:
+Проект позволяет авторизоваться с помощью `idInstance` и `apiTokenInstance`,
+просматривать список чатов и вести переписку через HTTP API Green-API.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Запуск
 
-## React Compiler
+### Локально
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Установить зависимости:
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Запустить development-сервер:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+npm run dev
+```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Docker
+
+Собрать образ:
+
+```bash
+docker build -t test-green-api .
+```
+
+Запустить контейнер:
+
+```bash
+docker run -p 8080:80 whatsapp-web-client
+```
+
+После запуска приложение доступно по адресу:
 
 ```
+http://localhost:8080
+```
+
+## Возможности
+
+- Авторизация через `idInstance` и `apiTokenInstance`
+- Проверка состояния инстанса
+- Получение списка чатов
+- Открытие отдельных чатов
+- Получение истории сообщений
+- Отправка сообщений
+- Создание нового чата по номеру телефона
+- Получение входящих сообщений через long polling
+- Автоматическое обновление текущего чата при получении сообщения
+- Адаптивный интерфейс для мобильных устройств
+
+## Скриншоты
+
+### Авторизация
+
+![Страница авторизации](./screenshots/Login.png)
+
+### Список чатов
+
+![Чат](./screenshots/EmptyСhat.png)
+
+### Переписка
+
+![Чат](./screenshots/Chat.png)
+
+### Создание нового чата
+
+![Создание нового чата](./screenshots/CreateChat.png)
+
+## Стек
+
+- React
+- TypeScript
+- React Router
+- TanStack Query
+- React Hook Form
+- Zod
+- Axios
+- Tailwind CSS
+- Max UI
+- Docker
+- Nginx

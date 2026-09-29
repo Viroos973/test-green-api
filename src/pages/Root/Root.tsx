@@ -1,10 +1,7 @@
-import {Panel} from "@maxhub/max-ui";
 import {Outlet} from "react-router-dom";
 
-const Root = () => (
-    <Panel mode="primary">
+export const Root = () => (
+    <div className="h-screen flex flex-col">
         <Outlet/>
-    </Panel>
+    </div>
 )
-
-export default Root
