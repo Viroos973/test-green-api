@@ -20,7 +20,12 @@ export const CreateChatModal = ({ isOpen, closeModal, setInterlocutor }: CreateC
                     control={form.control}
                     render={({field, fieldState}) => (
                         <div className="w-full">
-                            <PhoneInput {...field} />
+                            <PhoneInput {...field}
+                                        onChange={(value) => {
+                                            field.onChange(value);
+                                            functions.setError(null);
+                                        }}
+                            />
                             {fieldState.error && (
                                 <Typography.Body variant="small" className="text-red-500">
                                     {fieldState.error.message}

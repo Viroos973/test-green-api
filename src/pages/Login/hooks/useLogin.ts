@@ -1,10 +1,10 @@
-import {useForm, useWatch} from "react-hook-form";
+import {useForm} from "react-hook-form";
 import {loginSchema, type LoginSchema} from "../constants/LoginSchema.ts";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useNavigate} from "react-router-dom";
-import {ROUTES} from "../../../utils/constants/routes.ts";
+import {ROUTES} from "../../../utils/constants";
 import {useGetStateInstanceMutation} from "../../../shared/api/hooks";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 
 export const useLogin = () => {
     const navigate = useNavigate();
@@ -19,11 +19,6 @@ export const useLogin = () => {
         }
     });
 
-    const apiTokenInstance = useWatch({
-        control: loginForm.control,
-        name: "apiTokenInstance"
-    });
-
     const onSubmit = loginForm.handleSubmit(async (value) => {
         setInstanceError(null);
 
@@ -31,7 +26,7 @@ export const useLogin = () => {
         localStorage.setItem("apiTokenInstance", value.apiTokenInstance);
 
         try {
-            const state = await login.mutateAsync();
+            const state = await login.mutateAsync({});
             if (state.data.stateInstance !== "authorized") {
                 localStorage.removeItem("idInstance");
                 localStorage.removeItem("apiTokenInstance");
@@ -49,13 +44,9 @@ export const useLogin = () => {
         }
     });
 
-    useEffect(() => {
-        setInstanceError(null);
-    }, [apiTokenInstance]);
-
     return {
         states: { instanceError },
         form: loginForm,
-        functions: { onSubmit }
+        functions: { onSubmit, setInstanceError }
     }
 }

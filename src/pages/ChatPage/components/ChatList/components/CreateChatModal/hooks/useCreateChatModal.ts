@@ -1,9 +1,9 @@
-import {useForm, useWatch} from "react-hook-form";
+import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {createChatSchema, type CreateChatSchema} from "../constants/CreateChatSchema.ts";
 import {usePostCheckAccountMutation} from "../../../../../../../shared/api/hooks";
 import {useNavigate} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 
 export const useCreateChatModal = (closeModal: () => void, setInterlocutor: (interlocutor: string|null) => void) => {
     const [error, setError] = useState<string | null>(null);
@@ -16,11 +16,6 @@ export const useCreateChatModal = (closeModal: () => void, setInterlocutor: (int
         defaultValues: {
             phoneNumber: ''
         }
-    });
-
-    const phoneNumber = useWatch({
-        control: createChatForm.control,
-        name: "phoneNumber"
     });
 
     const handleCloseModal = () => {
@@ -45,13 +40,9 @@ export const useCreateChatModal = (closeModal: () => void, setInterlocutor: (int
         navigate(`?chatId=${isExist.data.chatId}`)
     })
 
-    useEffect(() => {
-        setError(null);
-    }, [phoneNumber]);
-
     return {
         states: { error },
         form: createChatForm,
-        functions: { handleCloseModal, onSubmit }
+        functions: { handleCloseModal, onSubmit, setError }
     }
 }

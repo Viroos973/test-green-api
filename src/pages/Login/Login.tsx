@@ -32,7 +32,12 @@ export const Login = () => {
                         control={form.control}
                         render={({ field, fieldState }) => (
                             <div className="w-full">
-                                <Input {...field} placeholder="apiTokenInstance" />
+                                <Input {...field}
+                                       onChange={(value) => {
+                                           field.onChange(value);
+                                           functions.setInstanceError(null);
+                                       }} placeholder="apiTokenInstance"
+                                />
                                 {fieldState.error && (
                                     <Typography.Body variant="small" className="text-red-500">
                                         {fieldState.error.message}
